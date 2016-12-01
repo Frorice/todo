@@ -39,8 +39,7 @@ NEJ.define([
      */
     signIn = function (accountInfo){
       if(!accountInfo){
-        //若没有账户登录，使用默认账户 
-        //_obs.trigger('signin',{id:-1,name:"default"});
+        //若没有账户登录，返回 
         return;
       }
       var 
@@ -172,14 +171,14 @@ NEJ.define([
      * 添加单个todo
      * @return {Void}
      */
-    addTodo = function (){
+    addTodo = function (cnt){
       var 
         url = _urls.todosUrl,
         opt = {
           data:{
             uid:564,
             lid:343,
-            cnt:"dsds"
+            cnt:cnt
           },
           method:'POST',
           onload:function(_data){
@@ -201,13 +200,13 @@ NEJ.define([
      * 添加单个清单
      * @return {Void}
      */
-    addList = function (){
+    addList = function (name){
       var 
         url = _urls.listsUrl,
         opt = {
           data:{
             uid:3434,
-            name:"dsd"
+            name:name
           },
           method:'POST',
           onload:function(_data){
@@ -229,15 +228,11 @@ NEJ.define([
      * 更新单个todo的内容
      * @return {Void}
      */
-    updateTodo = function (){
+    updateTodo = function (data){
       var 
         url = _urls.todosUrl,
         opt = {
-          data:{
-            tid:45,
-            cnt:"sds",
-            active:false
-          },
+          data:data,
           method:'PATCH',
           onload:function(_data){
             _obs.trigger('updateTodo',_data);
@@ -258,14 +253,11 @@ NEJ.define([
      * 更新单个清单的名称
      * @return {Void}
      */
-    updateList = function (){
+    updateList = function (data){
       var 
         url = _urls.listsUrl,
         opt = {
-          data:{
-            lid:5,
-            name:"hehe"
-          },
+          data:data,
           method:'PATCH',
           onload:function(_data){
             _obs.trigger('updateList',_data);
@@ -286,12 +278,12 @@ NEJ.define([
      * 删除单个todo
      * @return {Void}
      */
-    delTodo = function (){
+    delTodo = function (tid){
       var 
         url = _urls.todosUrl,
         opt = {
           data:{
-            tid:4
+            tid:tid
           },
           method:'DELETE',
           onload:function(_data){
@@ -313,12 +305,12 @@ NEJ.define([
      * 删除单个清单
      * @return {Void}
      */
-    delList = function (){
+    delList = function (lid){
       var 
         url = _urls.listsUrl,
         opt = {
           data:{
-            lid:5
+            lid:lid
           },
           method:'DELETE',
           onload:function(_data){

@@ -1,0 +1,14 @@
+<div id="todos-lists">
+  <ul id="todos-lists__${uid}">
+    {for list in lists}
+    <li id="todo-lists_${list.id}">
+      <span>${list.name}</span>
+      <div>
+        <span class="active">${list.active}</span>/${list.total}
+        <!--编辑清单图标按钮占位-->
+        <i></i>
+      </div>
+    </li>
+    {/for}
+  </ul>
+</div>

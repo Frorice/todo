@@ -6,7 +6,7 @@
  * ------------------------------------------
  */
 /** @module pro/util/observer.js */
-NEj.define([],function (){
+NEJ.define([],function (){
   var clientList = {},//订阅缓存
       listen,
       trigger,

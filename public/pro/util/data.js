@@ -21,8 +21,13 @@ NEJ.define([
         todos:null
       }
     },
-    currUser = defaultUser;//当前用户
-    
+    //当前用户
+    currUser = defaultUser,
+    currList = {
+      id:null,
+      name:null
+    };
+
   var 
     _changeCurrUser,_updateLists,_updateTodos;
 
@@ -34,9 +39,9 @@ NEJ.define([
      * @return {Void}
      */
     _changeCurrUser = function (_user){
-      if(currUser.id == _user.id){
-        return;
-      }
+      // if(currUser.id == _user.id){
+      //   return;
+      // }
       currUser = _user;
       _obs.trigger('renderUserBar',currUser);
     };
@@ -47,11 +52,11 @@ NEJ.define([
      * @return {Void}
      */
     _updateLists = function (_data){
-      if(_data.uid != currUser.id){
-        return;
-      }
+      // if(_data.uid != currUser.id){
+      //   return;
+      // }
       currUser.data.lists = _data.lists;
-      _obs.trigger('renderTodoLists',currUser.data.lists);
+      _obs.trigger('renderTodoLists',_data);
     };
 
     /**
@@ -60,11 +65,11 @@ NEJ.define([
      * @return {Void}
      */
     _updateTodos = function (_data){
-      if(_data.uid != currUser.id){
-        return;
-      }
+      // if(_data.uid != currUser.id){
+      //   return;
+      // }
       currUser.data.todos = _data.todos;
-      _obs.trigger('renderTodos',currUser.data.todos);
+      _obs.trigger('renderTodos',_data);
     };
 
     /**
@@ -74,15 +79,15 @@ NEJ.define([
      */
     init = function (){
       //初始化本地数据
-      _updateLists({
-        uid:-1,
-        lists:localStorage.get('lists')
-      });
-      _updateTodos({
-        uid:-1,
-        lid:23,
-        lists:localStorage.get('todos')
-      });
+      // _updateLists({
+      //   uid:-1,
+      //   lists:localStorage.get('lists')
+      // });
+      // _updateTodos({
+      //   uid:-1,
+      //   lid:23,
+      //   lists:localStorage.get('todos')
+      // });
 
       var listens = {
         signIn:_changeCurrUser,
@@ -106,6 +111,18 @@ NEJ.define([
     };
 
     return {
-      init:init
+      init:init,
+      getCurrUser: function (){
+        return {
+          id: currUser.id,
+          name: currUser.name
+        };
+      },
+      getCurrList: function (){
+        return currList;
+      },
+      setCurrList: function (list){
+        currList = list;
+      }
     };
 });

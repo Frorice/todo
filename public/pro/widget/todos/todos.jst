@@ -1,0 +1,16 @@
+<div id="todos">
+  <ul id="todos__${uid}">
+    {for todo in todos}
+      <li class="todos__${todo.id}">
+        <input type="checkbox"/>
+        <span class="todos__active--${todo.active}">${todo.cnt}</span>
+      </li>
+    {/for}
+  </ul>
+  <ul>
+    <li>All</li>
+    <li>Active</li>
+    <li>Done</li>
+  <ul>
+</div>
+
