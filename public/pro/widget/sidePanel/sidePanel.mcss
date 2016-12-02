@@ -1,1 +1,3 @@
-sidePanel.mcss
+.side-panel {
+  display: inline-block;
+}

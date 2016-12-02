@@ -1,1 +1,31 @@
-submitForm.mcss
+#sidepanel-add{
+  width: $widthS;
+  border-top:.1rem solid $supColorThree;
+  border-bottom:.1rem solid $supColorThree;
+  $padding: .5rem, 0;
+  cursor: pointer;
+  >i,>span {
+    color: $supColorOne;
+  }
+  >span {
+    margin-left: 1rem;
+  }
+}
+#mainpanel-add{
+  position: relative;
+  width: $widthL;
+  >div{
+    >i{
+      position: absolute;
+      left: .5rem;
+      color: $supColorOne;
+    }
+    >input {
+      box-sizing:border-box;
+      font-size: 1rem;
+      width: $widthFull;
+      padding:.5rem 0 .5rem 2rem;
+    }
+  }
+}
+

@@ -1,0 +1,7 @@
+{
+  "input": "./todo.mcss",  
+  "outport": "./todo.min.css",  
+  "format": 2,
+  "watch": 2, 
+  "exclude": "(\/|\\\\)_|^_|include"
+}
