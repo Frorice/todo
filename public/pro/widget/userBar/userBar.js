@@ -16,8 +16,6 @@ NEJ.define([
 
     var userBarHtml;//用户信息条html结构
 
-    
-
     /**
      * 构建模板
      * @param  {Object} _data生成html结构所需的数据
@@ -39,6 +37,7 @@ NEJ.define([
       build(_data);
       _obs.trigger('renderSidePanel',{
         _sign:'add',
+        widgetType:'userBar',
         html:userBarHtml
       });
     }

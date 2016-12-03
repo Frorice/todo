@@ -39,6 +39,7 @@ NEJ.define([
       build(_data);
       _obs.trigger('renderSidePanel',{
         _sign:'add',
+        widgetType: 'todoLists',
         html:todoListsHtml
       });
     }

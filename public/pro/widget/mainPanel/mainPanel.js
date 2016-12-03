@@ -13,7 +13,12 @@ NEJ.define([
   ],function (_e,_obs){
     var init, render;
 
-    var mainPanel;//主面板节点
+    var 
+      mainPanel,//主面板节点
+      childNode = {
+        submitForm: _e._$create('div'),
+        todos: _e._$create('div')
+      };
      /**
      * 初始化
      * @param  {Object} _container 应用容器
@@ -27,8 +32,6 @@ NEJ.define([
       //监听主面板渲染事件
       _obs.listen('renderMainPanel',render);
 
-      //触发提交组件渲染
-      _obs.trigger('renderSubmitForm',{target:"renderMainPanel"});
     };
 
     /**
@@ -39,11 +42,10 @@ NEJ.define([
      * @return {Void}
      */
     render = function (_data){
-     if(_data._sign === 'add'){
-       mainPanel.innerHTML += _data.html;
-     }else{
-       mainPanel.innerHTML = _data.html;
-     }
+      childNode[_data.widgetType].innerHTML = _data.html;
+      if(_data._sign === 'add'){
+        mainPanel.appendChild(childNode[_data.widgetType]);
+      }
     };
 
     return {

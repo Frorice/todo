@@ -13,7 +13,14 @@ NEJ.define([
   ],function (_e,_obs){
     var init, render;
 
-    var sidePanel;//侧边面板节点
+    var 
+      sidePanel,//侧边面板节点
+      childNode = {
+        userBar: _e._$create('div'),
+        submitForm: _e._$create('div'),
+        todoLists: _e._$create('div')
+      };
+
      /**
      * 初始化
      * @param  {Object} _container 应用容器
@@ -26,8 +33,7 @@ NEJ.define([
       _container.appendChild(sidePanel);
       //监听侧边面板渲染事件
       _obs.listen('renderSidePanel',render);
-      //触发提交组件渲染
-      _obs.trigger('renderSubmitForm',{target:"renderSidePanel"});
+      
     }
 
     /**
@@ -38,11 +44,10 @@ NEJ.define([
      * @return {Void}
      */
     render = function (_data){
-     if(_data._sign === 'add'){
-       sidePanel.innerHTML += _data.html;
-     }else{
-       sidePanel.innerHTML = _data.html;
-     }
+      childNode[_data.widgetType].innerHTML = _data.html;
+      if(_data._sign === 'add'){
+        sidePanel.appendChild(childNode[_data.widgetType]);
+      }
     }
 
     return {
