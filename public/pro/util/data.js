@@ -39,8 +39,15 @@ NEJ.define([
       if(currUser && currUser.id == _user.id){
         return;
       }
-      currUser = _user;
-      _obs.trigger('renderUserBar',currUser);
+      currUser = {
+        id:_user.uid,
+        name:_user.userName,
+        data:{
+          lists:null,
+          todos:null
+        }
+      };
+      _obs.trigger('renderUserBar',_user);
     };
 
     /**
@@ -49,9 +56,9 @@ NEJ.define([
      * @return {Void}
      */
     _updateLists = function (_data){
-      if(_data.uid != currUser.id){
-        return;
-      }
+      // if(_data.uid != currUser.id){
+      //   return;
+      // }
       currUser.data.lists = _data.lists;
       _obs.trigger('renderTodoLists',_data);
     };
@@ -62,8 +69,14 @@ NEJ.define([
      * @return {Void}
      */
     _updateTodos = function (_data){
-      if(_data.uid != currUser.id){
-        return;
+      // if(_data.uid != currUser.id){
+      //   return;
+      // }
+      for(var i =0;currUser.data.lists[i++];){
+        if(currUser.data.lists[i-1].id == _data.lid){
+          setCurrList(currUser.data.lists[i-1]);
+          break;
+        }
       }
       currUser.data.todos = _data.todos;
       _obs.trigger('renderTodos',_data);

@@ -39,7 +39,6 @@ NEJ.define([
     render = function (_data){
       build({action:_data.target.slice(6).toLowerCase()+'-add'});
       _obs.trigger(_data.target,{
-        _sign:'add',
         widgetType: 'submitForm',
         html:submitFormHtml
       });

@@ -1,0 +1,16 @@
+<div id="todo-dialog">
+  {if _sign == "sign"}
+    <input id="todo-dialog__user-name" type="text" placeholder="用户名">
+    <input id="todo-dialog__pwd" type="password" placeholder="密码">
+    <div>
+      <input id="todo-dialog__sign-up" type="button" value="注册">
+      <input id="todo-dialog__sign-in"type="button" value="登录">
+    </div>
+  {else}
+    <input type="text" placeholder="清单名">
+    <div>
+      <input id="todo-dialog__cancel"type="button" value="取消">
+      <input id="todo-dialog__add-list" type="button" value="确定">
+    </div>
+  {/if}
+</div>

@@ -2,7 +2,7 @@
   width: $widthS;
   border-top:.1rem solid $supColorThree;
   border-bottom:.1rem solid $supColorThree;
-  $padding: .5rem, 0;
+  padding: .5rem 0;
   cursor: pointer;
   >i,>span {
     color: $supColorOne;

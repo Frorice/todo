@@ -1,20 +1,25 @@
 $widthS = 175px;
+$widthM = 275px;
 $widthL = 625px;
+$heightM = 225px;
 $widthFull = 100%;
+$heightFull = 100%;
 $warningColor = red;
 $supColorOne  = blue;
 $supColorTwo  = yellow;
 $supColorThree= gray;
+$supColorFour = black;
+$borderRadiusNormal = 5px;
 
-$padding = ($ud = 1rem,$lr = .75rem){
-  padding-top: $ud;
-  padding-bottom: $ud;
-  padding-left: $lr;
-  padding-right: $lr;
+$dividWidth = ( $width, $bouns){
+  width: $width*$bouns;
 }
 
 html {
   font-size: 16px
+}
+.none {
+  display: none;
 }
 
 #todo {
@@ -32,7 +37,7 @@ html {
   width: $widthS;
   border-top:.1rem solid $supColorThree;
   border-bottom:.1rem solid $supColorThree;
-  $padding: .5rem, 0;
+  padding: .5rem 0;
   cursor: pointer;
   >i,>span {
     color: $supColorOne;
@@ -65,7 +70,7 @@ html {
     padding: 0;
     list-style: none;
     >li {
-      $padding: .5rem, 0;
+      padding: .5rem 0;
       &:hover{
         cursor: pointer;
         background-color: $supColorOne;
@@ -85,9 +90,9 @@ html {
     padding: 0;
     list-style: none;
     &:first-child >li {
-      $padding: .75rem, .5rem;
+      padding: .75rem .5rem;
       border:.1rem solid $supColorThree;
-      border-radius: 5px;
+      border-radius: $borderRadiusNormal;
       margin-bottom: 5px;
       &:hover {
         box-shadow: 1px 1px 5px;
@@ -95,12 +100,58 @@ html {
     }
     &:last-child >li {
       float: right;
-      $padding: .25rem, .5rem;
+      padding: .25rem .5rem;
       &:hover {
         cursor: pointer;
         border-radius:5px;
         background-color: $supColorTwo;
       } 
+    }
+  }
+}
+.diaCta {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: $widthFull;
+  height: $heightFull;
+  background-color: $supColorFour;
+  opacity: .8;
+
+  >#todo-dialog {
+    position: relative;
+    top:50%;
+    width:$widthM;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: white;
+    border-radius: $borderRadiusNormal;
+    padding:1rem 1.5rem;
+
+    input {
+      font-size: 1rem;
+      border-radius: $borderRadiusNormal;
+    }
+
+    >input {
+      display: block;
+      height: 1.5rem;
+      width: $widthFull;
+      margin: 0.75rem -.5rem;
+      padding: 0.3rem 0.5rem;
+      border:1px solid;
+      outline-style:none;
+      &:focus {
+        border:1px solid $supColorOne;
+      }
+      +div{
+        text-align: right;
+        >input {
+          $dividWidth($widthM, 0.25);
+          border:1px solid;
+          outline-style:none;
+        }
+      }
     }
   }
 }

@@ -13,8 +13,9 @@ NEJ.define([
   '{pro}widget/submitForm/submitForm.js',
   '{pro}widget/todoLists/todoLists.js',
   '{pro}widget/todos/todos.js',
-  '{pro}widget/userBar/userBar.js'
-],function (_appData, sidePanel, mainPanel, submitForm, todoLists, todos, userBar){
+  '{pro}widget/userBar/userBar.js',
+  '{pro}widget/dialog/dialog.js'
+],function (_appData, sidePanel, mainPanel, submitForm, todoLists, todos, userBar, dialog){
     var init;
 
     /**
@@ -28,7 +29,8 @@ NEJ.define([
      todoLists.init();
      todos.init();
      userBar.init();
-     
+     dialog.init();
+
      sidePanel.init(_container);
      mainPanel.init(_container);
      //初始化本地默认数据

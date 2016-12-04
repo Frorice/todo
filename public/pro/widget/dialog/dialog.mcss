@@ -1,0 +1,46 @@
+.diaCta {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: $widthFull;
+  height: $heightFull;
+  background-color: $supColorFour;
+  opacity: .8;
+
+  >#todo-dialog {
+    position: relative;
+    top:50%;
+    width:$widthM;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: white;
+    border-radius: $borderRadiusNormal;
+    padding:1rem 1.5rem;
+
+    input {
+      font-size: 1rem;
+      border-radius: $borderRadiusNormal;
+    }
+
+    >input {
+      display: block;
+      height: 1.5rem;
+      width: $widthFull;
+      margin: 0.75rem -.5rem;
+      padding: 0.3rem 0.5rem;
+      border:1px solid;
+      outline-style:none;
+      &:focus {
+        border:1px solid $supColorOne;
+      }
+      +div{
+        text-align: right;
+        >input {
+          $dividWidth($widthM, 0.25);
+          border:1px solid;
+          outline-style:none;
+        }
+      }
+    }
+  }
+}

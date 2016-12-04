@@ -9,15 +9,17 @@
 
 NEJ.define([
     'base/element',
-    '{pro}util/observer.js'
-  ],function (_e,_obs){
+    'base/event',
+    '{pro}util/observer.js',
+    '{pro}util/handler.js',
+  ],function (_e, _v, _obs, _hdl){
     var init, render;
 
     var 
       mainPanel,//主面板节点
       childNode = {
-        submitForm: _e._$create('div'),
-        todos: _e._$create('div')
+        submitForm: null,
+        todos: null
       };
      /**
      * 初始化
@@ -42,10 +44,31 @@ NEJ.define([
      * @return {Void}
      */
     render = function (_data){
-      childNode[_data.widgetType].innerHTML = _data.html;
-      if(_data._sign === 'add'){
+      if(!childNode[_data.widgetType]){
+        childNode[_data.widgetType] = _e._$create('div');
+        //绑定事件
+        bindEvent(childNode[_data.widgetType], _data.widgetType);
         mainPanel.appendChild(childNode[_data.widgetType]);
       }
+        
+      childNode[_data.widgetType].innerHTML = _data.html;
+    };
+
+    bindEvent = function(_node, _widgetType){
+      var typeMap = {
+        todos:{
+          eventType:'click',
+          handler:function(){
+            _hdl.checkTodosByStatus();
+            _hdl.updateTodo();
+          }
+        },
+        submitForm:{
+          eventType:'keyup',
+          handler:_hdl.addItem
+        }
+      };
+      _v._$addEvent(_node, typeMap[_widgetType].eventType, typeMap[_widgetType].handler);
     };
 
     return {

@@ -9,16 +9,18 @@
 
 NEJ.define([
     'base/element',
-    '{pro}util/observer.js'
-  ],function (_e,_obs){
-    var init, render;
+    'base/event',
+    '{pro}util/observer.js',
+    '{pro}util/handler.js'
+  ],function (_e, _v, _obs, _hdl){
+    var init, render, bindEvent;
 
     var 
       sidePanel,//侧边面板节点
       childNode = {
-        userBar: _e._$create('div'),
-        submitForm: _e._$create('div'),
-        todoLists: _e._$create('div')
+        userBar: null,
+        submitForm: null,
+        todoLists: null
       };
 
      /**
@@ -44,11 +46,37 @@ NEJ.define([
      * @return {Void}
      */
     render = function (_data){
-      childNode[_data.widgetType].innerHTML = _data.html;
-      if(_data._sign === 'add'){
+      if(!childNode[_data.widgetType]){
+        childNode[_data.widgetType] = _e._$create('div');
+        //绑定事件
+        bindEvent(childNode[_data.widgetType], _data.widgetType);
         sidePanel.appendChild(childNode[_data.widgetType]);
       }
-    }
+        
+      childNode[_data.widgetType].innerHTML = _data.html;
+      
+    };
+
+    bindEvent = function(_node, _widgetType){
+      var typeMap = {
+        userBar:'sign',
+        submitForm:'addList',
+        todoLists: _hdl.switchList
+      };
+      //为userbar和submitForm绑定事件
+      if(typeof typeMap[_widgetType] == 'string'){
+        _v._$addEvent(_node, 'click', function (_event){
+          if(_widgetType=='userBar'&&_event.srcElement.id != 'user-bar__sign'){
+            return;
+          } 
+          _hdl.showDialog({
+            _sign:typeMap[_widgetType]
+          },typeMap[_widgetType]);
+        });
+      }
+      
+      _v._$addEvent(_node, 'click', typeMap[_widgetType])
+    };
 
     return {
      init:init

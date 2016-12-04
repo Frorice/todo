@@ -43,12 +43,13 @@ NEJ.define([
         return;
       }
       var 
-        url = _urls.userUrl,
+        url = _urls.signInUrl,
         opt = {
           data: accountInfo,
           method:'POST',
           onload:function(_data){
-            _obs.trigger('signin',_data);
+            _obs.trigger('signIn',_data);
+            getLists();
             console.log(_data,"signIn");
           },
           onerror:function(_error){
@@ -58,6 +59,7 @@ NEJ.define([
             console.log("先做点处理");
           }
         }
+      _j._$request(url,opt);
     }
     /**
      * 注册
@@ -70,7 +72,7 @@ NEJ.define([
         return;
       }
       var 
-        url = _urls.userUrl,
+        url = _urls.signUpUrl,
         opt = {
           data: accountInfo,
           method:'POST',
@@ -85,6 +87,7 @@ NEJ.define([
             console.log("先做点处理");
           }
         }
+      _j._$request(url,opt);
     }
     /**
      * 退出登录
@@ -96,7 +99,7 @@ NEJ.define([
         return;
       }
       var 
-        url = _urls.userUrl,
+        url = _urls.signOutUrl,
         opt = {
           data: accountInfo,
           method:'POST',
@@ -111,18 +114,19 @@ NEJ.define([
             console.log("先做点处理");
           }
         }
+      _j._$request(url,opt);
     }
     /**
      * 取得todo列表
      * @return {Void}
      */
-    getTodos = function (){
+    getTodos = function (_lid){
       var 
         url = _urls.todosUrl,
         opt = {
           param:{
-            uid:2342,//_appData.getCurrUser().id,
-            lid:232//_appData.getCurrList().id
+            uid:_appData.getCurrUser().id,
+            lid:_lid
           },
           method:'GET',
           onload:function(_data){
@@ -149,7 +153,7 @@ NEJ.define([
         url = _urls.listsUrl,
         opt = {
           param:{
-            uid:32//_appData.getCurrUser().id
+            uid:_appData.getCurrUser().id
           },
           method:'GET',
           onload:function(_data){
@@ -329,6 +333,9 @@ NEJ.define([
     };
 
     return {
+      signIn:signIn,
+      signUp:signUp,
+      signOut:signOut,
       getTodos: getTodos,
       getLists: getLists,
       addTodo: addTodo,

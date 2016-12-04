@@ -7,6 +7,7 @@ var files = [
   './submitForm/submitForm.mcss',
   './todoLists/todoLists.mcss',
   './todos/todos.mcss',
+  './dialog/dialog.mcss'
 ],
 targetFile = '../../css/todo.mcss';
 

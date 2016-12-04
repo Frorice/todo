@@ -11,6 +11,9 @@ NEJ.define([],function (){
       //todo请求地址
       todosUrl : '/api/todos',
       //清单请求地址
-      listsUrl  : '/api/lists'
+      listsUrl : '/api/lists',
+      signInUrl  : '/api/signin',
+      signUpUrl  : '/api/signup',
+      signOutUrl  : '/api/signout'
     }; 
 });

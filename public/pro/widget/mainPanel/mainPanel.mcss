@@ -1,20 +1,25 @@
 $widthS = 175px;
+$widthM = 275px;
 $widthL = 625px;
+$heightM = 225px;
 $widthFull = 100%;
+$heightFull = 100%;
 $warningColor = red;
 $supColorOne  = blue;
 $supColorTwo  = yellow;
 $supColorThree= gray;
+$supColorFour = black;
+$borderRadiusNormal = 5px;
 
-$padding = ($ud = 1rem,$lr = .75rem){
-  padding-top: $ud;
-  padding-bottom: $ud;
-  padding-left: $lr;
-  padding-right: $lr;
+$dividWidth = ( $width, $bouns){
+  width: $width*$bouns;
 }
 
 html {
   font-size: 16px
+}
+.none {
+  display: none;
 }
 
 #todo {

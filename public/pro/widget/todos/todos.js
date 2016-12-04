@@ -38,7 +38,6 @@ NEJ.define([
     render = function (_data){
       build(_data);
       _obs.trigger('renderMainPanel',{
-        _sign:'add',
         widgetType: 'todos',
         html:todosHtml
       });
