@@ -180,8 +180,8 @@ NEJ.define([
         url = _urls.todosUrl,
         opt = {
           data:{
-            uid:564,
-            lid:343,
+            uid:_appData.getCurrUser().id,
+            lid:_appData.getCurrList().id,
             cnt:cnt
           },
           method:'POST',
@@ -229,15 +229,17 @@ NEJ.define([
     };
 
     /**
-     * 更新单个todo的内容
+     * 更新单个todo的状态
      * @return {Void}
      */
-    updateTodo = function (data){
+    updateTodo = function (todo){
+      todo.uid = _appData.getCurrUser().id;
+      todo.lid = _appData.getCurrList().id;
       var 
         url = _urls.todosUrl,
         opt = {
-          data:data,
-          method:'PATCH',
+          data:todo,
+          method:'POST',
           onload:function(_data){
             _obs.trigger('updateTodo',_data);
               console.log(_data,"updateTodo");
@@ -262,7 +264,7 @@ NEJ.define([
         url = _urls.listsUrl,
         opt = {
           data:data,
-          method:'PATCH',
+          method:'POST',
           onload:function(_data){
             _obs.trigger('updateList',_data);
               console.log(_data,"updateList");

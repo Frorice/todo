@@ -47,6 +47,21 @@ NEJ.define([
             _hdl.sign(_event);
             _e._$replaceClassName(dialogNode[_sign],'','none');
           }
+          if(_event.srcElement.id == "todo-dialog__add-list"){
+            _hdl.addItem(_event);
+            _e._$replaceClassName(dialogNode[_sign],'','none');
+          }
+          if(_event.srcElement.id == "todo-dialog__delete-list"){
+            _hdl.deleteList(_event);
+            _e._$replaceClassName(dialogNode[_sign],'','none');
+          }
+          if(_event.srcElement.id == "todo-dialog__update-list"){
+            _hdl.updateList(_event);
+            _e._$replaceClassName(dialogNode[_sign],'','none');
+          }
+          if(_event.srcElement.id == "todo-dialog__cancel"){
+            _e._$replaceClassName(dialogNode[_sign],'','none'); 
+          }
         });
         dialogNode[_sign].innerHTML = dialogHtml;
         document.body.appendChild(dialogNode[_sign]);

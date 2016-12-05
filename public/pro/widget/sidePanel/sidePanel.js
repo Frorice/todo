@@ -61,7 +61,16 @@ NEJ.define([
       var typeMap = {
         userBar:'sign',
         submitForm:'addList',
-        todoLists: _hdl.switchList
+        todoLists: function (_event){
+          if(_event.srcElement.id == "todo-lists__edit"){
+            _hdl.showDialog({
+              _sign:_event.srcElement.parentNode.parentNode.id.replace('todo-lists__','')
+            },'editList');
+          }else{
+           _hdl.switchList(_event); 
+          }
+          
+        }
       };
       //为userbar和submitForm绑定事件
       if(typeof typeMap[_widgetType] == 'string'){

@@ -58,9 +58,17 @@ NEJ.define([
       var typeMap = {
         todos:{
           eventType:'click',
-          handler:function(){
-            _hdl.checkTodosByStatus();
-            _hdl.updateTodo();
+          handler:function(_event){
+            var srcElement = _event.srcElement;
+            if(srcElement.tagName == 'INPUT'){
+              _hdl.updateTodo(_event);
+            }
+            if(srcElement.tagName == 'LI' && srcElement.parentNode.id == "todos__switch-status"){
+              _hdl.checkTodosByStatus(_event);
+            }
+            if(srcElement.id == 'delTodo'){
+              _hdl.deleteTodo(_event);
+            }
           }
         },
         submitForm:{

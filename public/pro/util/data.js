@@ -69,6 +69,12 @@ NEJ.define([
      * @return {Void}
      */
     _updateTodos = function (_data){
+      if(_data.local){
+        _data.uid = currUser.id;
+        _data.lid = currList.id;
+        _obs.trigger('renderTodos',_data);
+        return;
+      }
       // if(_data.uid != currUser.id){
       //   return;
       // }
@@ -79,6 +85,7 @@ NEJ.define([
         }
       }
       currUser.data.todos = _data.todos;
+      
       _obs.trigger('renderTodos',_data);
     };
 
@@ -145,7 +152,8 @@ NEJ.define([
       getCurrUser: function (){
         return {
           id: currUser.id,
-          name: currUser.name
+          name: currUser.name, 
+          data: currUser.data
         };
       },
       getCurrList: function (){
