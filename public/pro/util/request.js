@@ -50,13 +50,9 @@ NEJ.define([
           onload:function(_data){
             _obs.trigger('signIn',_data);
             getLists();
-            console.log(_data,"signIn");
           },
           onerror:function(_error){
-            console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-            console.log("先做点处理");
+            _obs.trigger('renderDialog',{_sign:'sign',sign:'sign'});
           }
         }
       _j._$request(url,opt);
@@ -79,12 +75,6 @@ NEJ.define([
           onload:function(_data){
             _obs.trigger('signUp',_data);
             console.log(_data,"signUp");
-          },
-          onerror:function(_error){
-            console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-            console.log("先做点处理");
           }
         }
       _j._$request(url,opt);
@@ -94,24 +84,17 @@ NEJ.define([
      * @return {Void}
      */
     signOut = function (accountInfo){
-      if(!accountInfo){
-        //若没有账户信息，返回
-        return;
-      }
       var 
         url = _urls.signOutUrl,
         opt = {
-          data: accountInfo,
           method:'POST',
           onload:function(_data){
             _obs.trigger('signOut',_data);
+            _obs.trigger('getLists',{
+              uid: _appData.getCurrUser().id,
+              lists: _appData.getCurrUser().data.lists
+            })
             console.log(_data,"signOut");
-          },
-          onerror:function(_error){
-            console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-            console.log("先做点处理");
           }
         }
       _j._$request(url,opt);
@@ -134,10 +117,9 @@ NEJ.define([
             console.log(_data,"getTodos");
           },
           onerror:function(_error){
-              console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-              console.log("先做点处理");
+              if(_error.data == 404){
+                console.log(_appData.getCurrList());
+              }
           }
         };
 
@@ -162,9 +144,6 @@ NEJ.define([
           },
           onerror:function(_error){
               console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-              console.log("先做点处理");
           }
         };
 
@@ -181,19 +160,17 @@ NEJ.define([
         opt = {
           data:{
             uid:_appData.getCurrUser().id,
-            lid:_appData.getCurrList().id,
+            lid:_appData.getCurrList()._id,
             cnt:cnt
           },
           method:'POST',
           onload:function(_data){
-            _obs.trigger('addTodo',_data);
-              console.log(_data,"addTodo");
+            _obs.trigger('addTodo',_data.todo);
+            _obs.trigger('updateList',_data.list);
+            console.log(_data,"addTodo");
           },
           onerror:function(_error){
               console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-              console.log("先做点处理");
           }
         };
 
@@ -209,19 +186,16 @@ NEJ.define([
         url = _urls.listsUrl,
         opt = {
           data:{
-            uid:3434,
+            uid:_appData.getCurrUser().id,
             name:name
           },
           method:'POST',
           onload:function(_data){
             _obs.trigger('addList',_data);
-              console.log(_data,"addList");
+            console.log(_data,"addList");
           },
           onerror:function(_error){
               console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-              console.log("先做点处理");
           }
         };
 
@@ -233,22 +207,19 @@ NEJ.define([
      * @return {Void}
      */
     updateTodo = function (todo){
-      todo.uid = _appData.getCurrUser().id;
-      todo.lid = _appData.getCurrList().id;
+
       var 
         url = _urls.todosUrl,
         opt = {
           data:todo,
-          method:'POST',
+          method:'PUT',
           onload:function(_data){
-            _obs.trigger('updateTodo',_data);
-              console.log(_data,"updateTodo");
+            _obs.trigger('updateTodo', _data.todo);
+            _obs.trigger('updateList', _data.list);
+            console.log(_data,"updateTodo");
           },
           onerror:function(_error){
               console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-              console.log("先做点处理");
           }
         };
 
@@ -264,16 +235,13 @@ NEJ.define([
         url = _urls.listsUrl,
         opt = {
           data:data,
-          method:'POST',
+          method:'PUT',
           onload:function(_data){
             _obs.trigger('updateList',_data);
-              console.log(_data,"updateList");
+            console.log(_data,"updateList");
           },
           onerror:function(_error){
               console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-              console.log("先做点处理");
           }
         };
 
@@ -288,19 +256,17 @@ NEJ.define([
       var 
         url = _urls.todosUrl,
         opt = {
-          data:{
+          param:{
             tid:tid
           },
           method:'DELETE',
           onload:function(_data){
-            _obs.trigger('delTodo',_data);
+            _obs.trigger('delTodo',_data.todo);
+            _obs.trigger('updateList',_data.list);
             console.log(_data,"delTodo");
           },
           onerror:function(_error){
               console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-              console.log("先做点处理");
           }
         };
 
@@ -315,19 +281,16 @@ NEJ.define([
       var 
         url = _urls.listsUrl,
         opt = {
-          data:{
+          param:{
             lid:lid
           },
           method:'DELETE',
           onload:function(_data){
-            _obs.trigger('delList',_data);
+            _obs.trigger('delList',_data.list);
             console.log(_data,"delList");
           },
           onerror:function(_error){
               console.error("这里出错了");
-          },
-          onbeforerequest:function(_event){
-              console.log("先做点处理");
           }
         };
 

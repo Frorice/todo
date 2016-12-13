@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>首页</title>
+      <link rel="stylesheet" href="../css/todo.min.css">
+    </head>
+    <body>
+      <div id="todo"></div>
+      <script src="../nej-master/src/define.js?pro=../pro/"></script>
+      <script>
+        NEJ.define([
+            '{pro}todo.js',
+            'base/element',
+            '{pro}util/request.js'
+        ],function(todo,_e,_r){
+            todo.init(_e._$get('todo'));
+        });
+      </script>
+    </body>
+</html>

@@ -75,9 +75,17 @@ NEJ.define([
       //为userbar和submitForm绑定事件
       if(typeof typeMap[_widgetType] == 'string'){
         _v._$addEvent(_node, 'click', function (_event){
-          if(_widgetType=='userBar'&&_event.srcElement.id != 'user-bar__sign'){
+
+          if(_event.srcElement.id == 'user-bar__sign-out'){
+            //退出操作
+            _hdl.sign(_event);
             return;
           } 
+
+          //userbar内点击除登录按钮以外的区域不响应
+          if(_widgetType=='userBar'&& _event.srcElement.id != 'user-bar__sign'){
+            return;
+          }
           _hdl.showDialog({
             _sign:typeMap[_widgetType]
           },typeMap[_widgetType]);

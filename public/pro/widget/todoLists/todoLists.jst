@@ -1,7 +1,7 @@
 <div id="todos-lists">
   <ul id="todos-lists__${uid}">
     {for list in lists}
-    <li id="todo-lists__${list.id}">
+    <li id="todo-lists__${list._id}">
       <span>${list.name}</span>
       <div>
         <span class="active">${list.active}</span>/${list.total}

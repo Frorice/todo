@@ -7,14 +7,15 @@
       <input id="todo-dialog__sign-in"type="button" value="登录">
     </div>
   {else}
-    <input id="todo-dialog__list-name" type="text" placeholder="清单名">
     {if _sign == "addList"}
+    <input id="todo-dialog__list-name--add" type="text" placeholder="清单名">
     <div>
       <input id="todo-dialog__cancel"type="button" value="取消">
       <input id="todo-dialog__add-list" type="button" value="确定">
     </div>
     {else}
-    <div id="${sign}">
+    <input id="todo-dialog__list-name--update" type="text" placeholder="清单名">
+    <div id="${_sign}">
       <input id="todo-dialog__delete-list" type="button" value="删除">
       <input id="todo-dialog__update-list" type="button" value="修改">
     </div>

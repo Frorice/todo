@@ -1,0 +1,33 @@
+{
+  "name": "f-todos",
+  "version": "1.0.0",
+  "description": "netease project plan ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frorice/todo.git"
+  },
+  "keywords": [
+    "todo",
+    "frorice"
+  ],
+  "author": "frorice",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Frorice/todo/issues"
+  },
+  "homepage": "https://github.com/Frorice/todo#readme",
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "co": "^4.6.0",
+    "koa": "^2.0.0-alpha.7",
+    "koa-bodyparser": "^2.3.0",
+    "koa-router": "^5.4.0",
+    "koa-session": "^3.4.0",
+    "koa-static": "^2.0.0",
+    "mongoose": "^4.7.1"
+  }
+}

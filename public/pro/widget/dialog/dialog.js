@@ -34,7 +34,7 @@ NEJ.define([
     /**
      * 构建模板并添加到结构已添加过则从结构中调出
      * @param  {Object} _data 生成html结构所需的数据
-     * @param  {String} _sign 弹出框标记目前有两个，登录/注册弹出框，添加清单弹出框
+     * @param  {String} _sign 弹出框名称标记用于区分登录/注册弹出框，添加、修改清单弹出框
      * @return {Void}
      */
     render = function (_data, _sign){
@@ -67,6 +67,10 @@ NEJ.define([
         document.body.appendChild(dialogNode[_sign]);
       }
 
+      if(_sign!= 'sign' || _sign != 'addList'){
+        dialogNode[_sign].innerHTML = dialogHtml;
+      }
+      
       openDialog(_sign);
       
     };

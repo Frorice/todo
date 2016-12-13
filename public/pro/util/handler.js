@@ -26,14 +26,13 @@ NEJ.define([
     /**
      * 根据标识显示弹出框
      * @param  {Object} _data 渲染需要的数据
-     * @param  {String} _sign 弹出框名称标记目前有两个，登录/注册弹出框，添加清单弹出框
+     * @param  {String} _sign 弹出框名称标记用于区分登录/注册弹出框，添加、修改清单弹出框
      * @return {Void}
      */
     showDialog = function (_data, _sign){
       if(typeof _data == 'string'){
         _sign = _data;
       }
-
       _obs.trigger('renderDialog', _data, _sign);
     };
 
@@ -45,7 +44,7 @@ NEJ.define([
 
     addItem = function(_event){
       if(_event.srcElement.id == "todo-dialog__add-list"){
-        _req.addList(_e._$get('todo-dialog__list-name').value);
+        _req.addList(_e._$get('todo-dialog__list-name--add').value);
       }else{
         if(_event.key == "Enter"){
           _req.addTodo(_e._$get('main-panel__add-todo').value);        
@@ -59,10 +58,10 @@ NEJ.define([
      */
     updateTodo = function (_event){
       var srcElement = _event.srcElement;
-          tid = srcElement.parentNode.className.replace('todos__',''),
+          tid = srcElement.parentNode.id.replace('todos__',''),
           todos = _appData.getCurrUser().data.todos;
       for(var i=0;todos[i];i++){
-        if(todos[i].id == tid){
+        if(todos[i]._id == tid){
           todos[i].active = !todos[i].active;
           _req.updateTodo(todos[i]);
           break;
@@ -76,10 +75,11 @@ NEJ.define([
      */
     checkTodosByStatus = function (_event){
       
-      var srcElement = _event.srcElement;
-          todos = _appData.getCurrUser().data.todos; 
+      var srcElement = _event.srcElement,
+          user  = _appData.getCurrUser(),
+          todos = user.data.todos; 
       switch(srcElement.innerHTML.toLowerCase()){
-        case 'all':_obs.trigger('updateTodo',{local:true,todos:todos});break;
+        case 'all':_obs.trigger('renderTodos',{uid: user.id, todos:todos});break;
         case 'active':(function(todos){
           var activeTodos = [];
           for(var i = 0;todos[i];i++){
@@ -87,7 +87,7 @@ NEJ.define([
               activeTodos.push(todos[i]);
             }
           }
-          _obs.trigger('updateTodo',{local:true,todos:activeTodos});
+          _obs.trigger('renderTodos',{uid: user.id, todos:activeTodos});
         })(todos);break;
         case 'done':(function(todos){
           var doneTodos = [];
@@ -96,7 +96,7 @@ NEJ.define([
               doneTodos.push(todos[i]);
             }
           }
-          _obs.trigger('updateTodo',{local:true,todos:doneTodos});
+          _obs.trigger('renderTodos',{uid: user.id, todos:doneTodos});
         })(todos);break;
       }
 
@@ -113,7 +113,7 @@ NEJ.define([
         if(_event.path[i].tagName == 'LI'){
           lid = _event.path[i].id.replace('todo-lists__','');
           for(var j = 0;lists[j];j++){
-            if(lists[j].id == lid){
+            if(lists[j]._id == lid){
               _appData.setCurrList(lists[j]);
               break;
             }
@@ -130,14 +130,19 @@ NEJ.define([
      * @return {Void}
      */
     sign = function(_event){
-      var userInfo = {
-        userName: _e._$get('todo-dialog__user-name').value,
-        pwd:_e._$get('todo-dialog__pwd').value
-      };
+      var userInfo;
+      if(_e._$get('todo-dialog__user-name')){
+        userInfo = {
+          userName: _e._$get('todo-dialog__user-name').value,
+          pwd: _e._$get('todo-dialog__pwd').value
+        };
+      }
       if(_event.srcElement.id == 'todo-dialog__sign-in'){
         _req.signIn(userInfo);
-      }else{
+      }else if(_event.srcElement.id == 'todo-dialog__sign-up'){
         _req.signUp(userInfo);
+      }else {
+        _req.signOut();
       }
     };
 
@@ -166,9 +171,18 @@ NEJ.define([
      * @return {Void}
      */
     updateList = function (_event){
-      var lid = _event.srcElement.parentNode.id;
-      var listName = _e._$get('todo-dialog__list-name').value;
-      _req.updateList({lid: lid, name: listName}); 
+      var lists = _appData.getCurrUser().data.lists,
+      lid       = _event.srcElement.parentNode.id,
+      listName  = _e._$get('todo-dialog__list-name--update').value;
+
+      for(var i = 0; lists[i]; i++){
+        if(lists[i]._id == lid){
+          lists[i].name = listName;
+          _req.updateList(lists[i]);
+          break; 
+        }
+      }
+      
     };
 
     return {

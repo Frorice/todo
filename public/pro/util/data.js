@@ -26,7 +26,7 @@ NEJ.define([
     currList;
 
   var 
-    _changeCurrUser, _updateLists, _updateTodos, _initByLocalData;
+    _changeCurrUser, _updateLists, _updateTodos, _initByLocalData, _replaceItem;
 
   var init;
 
@@ -56,11 +56,21 @@ NEJ.define([
      * @return {Void}
      */
     _updateLists = function (_data){
-      // if(_data.uid != currUser.id){
-      //   return;
-      // }
-      currUser.data.lists = _data.lists;
-      _obs.trigger('renderTodoLists',_data);
+      if(_data.uid != currUser.id){
+        return;
+      }
+      
+      if(!_data.lists){
+        currUser.data.lists ? _replaceItem(currUser.data.lists, _data)
+        :(!_data.del && (currUser.data.lists = [_data])); 
+      }else{
+        currUser.data.lists = _data.lists;
+      }
+      
+      _obs.trigger('renderTodoLists',{
+        uid: _data.uid,
+        lists: currUser.data.lists
+      });
     };
 
     /**
@@ -69,57 +79,49 @@ NEJ.define([
      * @return {Void}
      */
     _updateTodos = function (_data){
-      if(_data.local){
-        _data.uid = currUser.id;
-        _data.lid = currList.id;
-        _obs.trigger('renderTodos',_data);
+      if(_data.uid != currUser.id){
         return;
       }
-      // if(_data.uid != currUser.id){
-      //   return;
-      // }
-      for(var i =0;currUser.data.lists[i++];){
-        if(currUser.data.lists[i-1].id == _data.lid){
-          setCurrList(currUser.data.lists[i-1]);
-          break;
-        }
+      if(!_data.todos){
+        currUser.data.todos ? _replaceItem(currUser.data.todos, _data)
+        :(!_data.del && (currUser.data.todos = [_data])); 
+      }else{
+        currUser.data.todos = _data.todos;
       }
-      currUser.data.todos = _data.todos;
-      
-      _obs.trigger('renderTodos',_data);
+      _obs.trigger('renderTodos',{
+        uid: _data.uid,
+        todos:currUser.data.todos
+      });
     };
 
     /**
-     * 加载本地数据到缓存
+     * 自动登录或要求登录
      * @return {Void}
      */
     _initByLocalData = function (){
-      //取出本地保存的清单
-      var _todo_default_lists = JSON.parse(
-        localStorage.getItem('_todo_offline_data_lists')
-      ),
-      _todo_default_todos = {};
-
-      if(_todo_default_lists){
-        defaultUser.data.lists = _todo_default_lists;
-        //取清单中的第一个作为当前清单
-        currList = defaultUser.data.lists[0];
-        defaultUser.data.todos = JSON.parse(
-          localStorage.getItem(currList.name)
-        );
-      }
-      //渲染基础组件
-      _obs.trigger('renderUserBar', {
-        id: defaultUser.id,
-        userName: defaultUser.name,
-        status: 0
-      });
+      _req.signIn({});
 
       _obs.trigger('renderSubmitForm',{target:"renderSidePanel"});
 
       _obs.trigger('renderSubmitForm',{target:"renderMainPanel"});
     };
-
+    /**
+     * 删除或替换列表中的项
+     * @param  {Object} _container 应用容器
+     * @return {Void}
+     */
+    _replaceItem = function (arr, data){
+      var length = arr.length;
+      for(var i=0;arr[i];i++){
+        if(arr[i]._id == data._id){
+          data.del? arr.splice(i, 1): (arr[i] = data);
+          break;
+        }
+      }
+      if(i == length){
+        arr.push(data);
+      }
+    }
     /**
      * 监听数据变化并初始化数据
      * @param  {Object} _container 应用容器
