@@ -4,14 +4,13 @@
   position: fixed;
   width: $widthFull;
   height: $heightFull;
-  background-color: $supColorFour;
+  background-color: $supColorBlack;
   opacity: .8;
 
   >#todo-dialog {
     position: relative;
-    top:50%;
+    top:25%;
     width:$widthM;
-    transform: translateY(-50%);
     margin: 0 auto;
     background-color: white;
     border-radius: $borderRadiusNormal;
@@ -31,7 +30,7 @@
       border:1px solid;
       outline-style:none;
       &:focus {
-        border:1px solid $supColorOne;
+        border:1px solid $mainColor1;
       }
       +div{
         text-align: right;

@@ -1,0 +1,4 @@
+#user-bar{
+  padding: .5rem;
+  background-color: $supColorLightGray;
+}

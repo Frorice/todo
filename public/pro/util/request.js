@@ -75,6 +75,9 @@ NEJ.define([
           onload:function(_data){
             _obs.trigger('signUp',_data);
             console.log(_data,"signUp");
+          },
+          onerror:function(_error){
+            
           }
         }
       _j._$request(url,opt);
@@ -90,10 +93,9 @@ NEJ.define([
           method:'POST',
           onload:function(_data){
             _obs.trigger('signOut',_data);
-            _obs.trigger('getLists',{
-              uid: _appData.getCurrUser().id,
-              lists: _appData.getCurrUser().data.lists
-            })
+            _obs.trigger('renderTodoLists',{
+              none:true
+            });
             console.log(_data,"signOut");
           }
         }
@@ -118,7 +120,7 @@ NEJ.define([
           },
           onerror:function(_error){
               if(_error.data == 404){
-                console.log(_appData.getCurrList());
+                _obs.trigger('getTodos',{none:true});
               }
           }
         };

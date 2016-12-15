@@ -79,6 +79,11 @@ NEJ.define([
      * @return {Void}
      */
     _updateTodos = function (_data){
+      if(_data.none){
+        _obs.trigger('renderTodos',{none:_data.none});
+        currUser.data.todos = null;
+        return;
+      }
       if(_data.uid != currUser.id){
         return;
       }

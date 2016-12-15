@@ -1,17 +1,19 @@
 <div id="todos">
-  <ul id="todos__${uid}">
-    {for todo in todos}
-      <li id="todos__${todo._id}">
-        <input type="checkbox"/>
-        <span class="todos__active--${todo.active}">${todo.cnt}</span>
-        <i id="delTodo">删除</i>
-      </li>
-    {/for}
-  </ul>
-  <ul id="todos__switch-status">
-    <li>Done</li>
-    <li>Active</li>
-    <li>All</li>
-  </ul>
+    {if !none}
+    <ul id="todos__${uid}">
+      {for todo in todos}
+        <li id="todos__${todo._id}">
+          <input type="checkbox" {if !todo.active} checked {/if}/>
+          <span class="todos__active--${todo.active}">${todo.cnt}</span>
+          <i id="delTodo">删除</i>
+        </li>
+      {/for}
+    </ul>
+    <ul id="todos__switch-status">
+      <li>Done</li>
+      <li>Active</li>
+      <li>All</li>
+    </ul>
+    {/if}
 </div>
 

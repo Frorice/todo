@@ -1,11 +1,10 @@
 #sidepanel-add{
-  width: $widthS;
-  border-top:.1rem solid $supColorThree;
-  border-bottom:.1rem solid $supColorThree;
-  padding: .5rem 0;
+  width: $widthM;
+  background-color: $mainColor1;
+  padding: .5rem;
   cursor: pointer;
   >i,>span {
-    color: $supColorOne;
+    color: $supColorWhite;
   }
   >span {
     margin-left: 1rem;
@@ -18,12 +17,15 @@
     >i{
       position: absolute;
       left: .5rem;
-      color: $supColorOne;
+      color: $mainColor1;
     }
     >input {
-      box-sizing:border-box;
+      width: 561px;
+      margin:.75rem 1rem;
       font-size: 1rem;
-      width: $widthFull;
+      outline: none;
+      border: none;
+      border-radius: $borderRadiusNormal;
       padding:.5rem 0 .5rem 2rem;
     }
   }

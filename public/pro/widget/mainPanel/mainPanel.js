@@ -29,6 +29,7 @@ NEJ.define([
     init = function (_container){
       //在内存中创建节点
       mainPanel = _e._$create('div','main-panel');
+      mainPanel.innerHTML = '<div class="title-bar"><span id="title">todos</span></div>';
       //挂载到容器
       _container.appendChild(mainPanel);
       //监听主面板渲染事件

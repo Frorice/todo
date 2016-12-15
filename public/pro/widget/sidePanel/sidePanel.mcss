@@ -1,3 +1,7 @@
 .side-panel {
   display: inline-block;
+  height: $heightL;
+  width: $widthM;
+  background-color: $supColorWhite;
+  vertical-align: top;
 }

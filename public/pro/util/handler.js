@@ -108,13 +108,15 @@ NEJ.define([
      */
     switchList = function (_event){
       var lid,
-      lists = _appData.getCurrUser().data.lists;
+      lists = _appData.getCurrUser().data.lists,
+      title = _e._$get('title');
       for(var i = 0; _event.path[i];i++){
         if(_event.path[i].tagName == 'LI'){
           lid = _event.path[i].id.replace('todo-lists__','');
           for(var j = 0;lists[j];j++){
             if(lists[j]._id == lid){
               _appData.setCurrList(lists[j]);
+              title.innerText = lists[j].name;
               break;
             }
           }

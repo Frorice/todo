@@ -1,0 +1,36 @@
+$widthS     = 175px;
+$widthM     = 255px;
+$widthL     = 625px;
+$heightM    = 400px;
+$heightL    = 475px;
+$widthFull  = 100%;
+$heightFull = 100%;
+
+$warningColor       = #cc6633;
+$mainColor1         = #61a67f;
+$mainColor2         = #71af8c;
+$supColorLightBlue  = #e0eefa;
+$supColorGray       = #666666;
+$supColorLightGray  = #f7f7f7;
+$supColorDarkGray   = #a9a9a9;
+$supColorBlack      = #000000;
+$supColorWhite      = #ffffff;
+$borderRadiusNormal = 3px;
+
+$dividWidth = ( $width, $bouns){
+  width: $width*$bouns;
+}
+
+html {
+  font-size: 16px
+}
+.none {
+  display: none;
+}
+body{
+  background-color: $supColorDarkGray;
+}
+#todo {
+  width: $widthM+$widthL;
+  margin: 0 auto;
+}

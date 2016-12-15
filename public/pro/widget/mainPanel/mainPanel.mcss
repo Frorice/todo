@@ -1,31 +1,15 @@
-$widthS = 175px;
-$widthM = 275px;
-$widthL = 625px;
-$heightM = 225px;
-$widthFull = 100%;
-$heightFull = 100%;
-$warningColor = red;
-$supColorOne  = blue;
-$supColorTwo  = yellow;
-$supColorThree= gray;
-$supColorFour = black;
-$borderRadiusNormal = 5px;
-
-$dividWidth = ( $width, $bouns){
-  width: $width*$bouns;
-}
-
-html {
-  font-size: 16px
-}
-.none {
-  display: none;
-}
-
-#todo {
-  width: $widthS+$widthL;
-  margin: 0 auto;
-}
 .main-panel{
   display: inline-block;
+  height: $heightL;
+  width: $widthL;
+  background-image:url('../img/back.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  .title-bar {
+    background-color: $mainColor2;
+    font-size: 1rem;
+    color: $supColorWhite;
+    padding: 0.5rem 1rem;
+
+  }
 }
