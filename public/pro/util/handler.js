@@ -74,32 +74,16 @@ NEJ.define([
      * @return {Void}
      */
     checkTodosByStatus = function (_event){
-      
-      var srcElement = _event.srcElement,
-          user  = _appData.getCurrUser(),
-          todos = user.data.todos; 
-      switch(srcElement.innerHTML.toLowerCase()){
-        case 'all':_obs.trigger('renderTodos',{uid: user.id, todos:todos});break;
-        case 'active':(function(todos){
-          var activeTodos = [];
-          for(var i = 0;todos[i];i++){
-            if(todos[i].active){
-              activeTodos.push(todos[i]);
-            }
-          }
-          _obs.trigger('renderTodos',{uid: user.id, todos:activeTodos});
-        })(todos);break;
-        case 'done':(function(todos){
-          var doneTodos = [];
-          for(var i = 0;todos[i];i++){
-            if(!todos[i].active){
-              doneTodos.push(todos[i]);
-            }
-          }
-          _obs.trigger('renderTodos',{uid: user.id, todos:doneTodos});
-        })(todos);break;
-      }
-
+      var 
+        srcElement  = _event.srcElement,
+        user        = _appData.getCurrUser(),
+        checkStatus = srcElement.innerHTML.toLowerCase();
+      var renderData = {
+        uid: user.id
+      };
+      _appData.setCheckStatus(checkStatus);
+      renderData.todos = _appData.getRenderTodos();
+      _obs.trigger('renderTodos',renderData);
     };
     /**
      * 切换清单
@@ -124,6 +108,7 @@ NEJ.define([
           break;
         }
       }
+      _appData.setCheckStatus('active');
     };
 
      /**
@@ -136,7 +121,7 @@ NEJ.define([
       if(_e._$get('todo-dialog__user-name')){
         userInfo = {
           userName: _e._$get('todo-dialog__user-name').value,
-          pwd: _e._$get('todo-dialog__pwd').value
+          pwd: _e._$get('todo-dialog__pwd').value 
         };
       }
       if(_event.srcElement.id == 'todo-dialog__sign-in'){

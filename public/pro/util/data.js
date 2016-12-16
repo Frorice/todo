@@ -21,14 +21,15 @@ NEJ.define([
         todos:null
       }
     },
+    checkStatus = 'all',//当前查看状态
     //当前用户
     currUser,
     currList;
 
   var 
-    _changeCurrUser, _updateLists, _updateTodos, _initByLocalData, _replaceItem;
+    _changeCurrUser, _updateLists, _updateTodos, _initRequiredWidget, _replaceItem, _switchTodos;
 
-  var init;
+  var init, getRenderTodos;
 
     /**
      * 切换用户
@@ -93,18 +94,14 @@ NEJ.define([
       }else{
         currUser.data.todos = _data.todos;
       }
-      _obs.trigger('renderTodos',{
-        uid: _data.uid,
-        todos:currUser.data.todos
-      });
+      var renderData = {
+        uid: _data.uid
+      };
+      renderData.todos = getRenderTodos();
+      _obs.trigger('renderTodos',renderData);
     };
 
-    /**
-     * 自动登录或要求登录
-     * @return {Void}
-     */
-    _initByLocalData = function (){
-      _req.signIn({});
+    _initRequiredWidget = function (){
 
       _obs.trigger('renderSubmitForm',{target:"renderSidePanel"});
 
@@ -112,7 +109,8 @@ NEJ.define([
     };
     /**
      * 删除或替换列表中的项
-     * @param  {Object} _container 应用容器
+     * @param  {Array}  arr 数据列表
+     * @param  {Object} data 要替换或删除的项
      * @return {Void}
      */
     _replaceItem = function (arr, data){
@@ -126,6 +124,28 @@ NEJ.define([
       if(i == length){
         arr.push(data);
       }
+    };
+    /**
+     * 根据不同条件返回相应todo集合
+     * @param  {Boolean}  checkStatus 查询条件
+     * @return {Array}    renderTodos 用于渲染todo列表的todo集合
+     */
+    _switchTodos = function(checkStatus){
+      var renderTodos = [];
+      for(var i = 0;currUser.data.todos[i];i++){
+        if(checkStatus?currUser.data.todos[i].active:!currUser.data.todos[i].active){
+          renderTodos.push(currUser.data.todos[i]);
+        }
+      }
+      return renderTodos;
+    };
+    getRenderTodos = function(){
+      var todos = {
+        'all': currUser.data.todos
+      };
+      todos.active = _switchTodos(true);
+      todos.done   = _switchTodos(false);
+      return todos[checkStatus];
     }
     /**
      * 监听数据变化并初始化数据
@@ -151,7 +171,7 @@ NEJ.define([
       for(var request in _req){
         _obs.listen(request,listens[request]);
       }
-      _initByLocalData();
+      _initRequiredWidget();
     };
 
     return {
@@ -168,6 +188,11 @@ NEJ.define([
       },
       setCurrList: function (list){
         currList = list;
+      },
+      getRenderTodos: getRenderTodos,
+      setCheckStatus: function(status){
+        if(!checkStatus) return null;
+        checkStatus = status;
       }
     };
 });

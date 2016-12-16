@@ -11,8 +11,9 @@ NEJ.define([
     'base/element',
     'base/event',
     '{pro}util/observer.js',
-    '{pro}util/handler.js'
-  ],function (_e, _v, _obs, _hdl){
+    '{pro}util/handler.js',
+    '{pro}widget/dialog/dialog.js'
+  ],function (_e, _v, _obs, _hdl, dialog){
     var init, render, bindEvent;
 
     var 
@@ -89,6 +90,7 @@ NEJ.define([
           _hdl.showDialog({
             _sign:typeMap[_widgetType]
           },typeMap[_widgetType]);
+          dialog.setWarningText(typeMap[_widgetType],'');
         });
       }
       

@@ -45,29 +45,29 @@ NEJ.define([
           if(_event.srcElement.id == 'todo-dialog__sign-up' ||
             _event.srcElement.id == 'todo-dialog__sign-in' ){
             _hdl.sign(_event);
-            _e._$replaceClassName(dialogNode[_sign],'','none');
+            closeDialog(_sign);
           }
           if(_event.srcElement.id == "todo-dialog__add-list"){
             _hdl.addItem(_event);
-            _e._$replaceClassName(dialogNode[_sign],'','none');
+            closeDialog(_sign);
           }
           if(_event.srcElement.id == "todo-dialog__delete-list"){
             _hdl.deleteList(_event);
-            _e._$replaceClassName(dialogNode[_sign],'','none');
+            closeDialog(_sign);
           }
           if(_event.srcElement.id == "todo-dialog__update-list"){
             _hdl.updateList(_event);
-            _e._$replaceClassName(dialogNode[_sign],'','none');
+            closeDialog(_sign);
           }
           if(_event.srcElement.id == "todo-dialog__cancel"){
-            _e._$replaceClassName(dialogNode[_sign],'','none'); 
+            closeDialog(_sign); 
           }
         });
         dialogNode[_sign].innerHTML = dialogHtml;
         document.body.appendChild(dialogNode[_sign]);
       }
 
-      if(_sign!= 'sign' || _sign != 'addList'){
+      if(_sign == 'editList' && !_data.unrefresh){//清单编辑弹窗需要每次都渲染，因为包含所编辑清单的id
         dialogNode[_sign].innerHTML = dialogHtml;
       }
       
@@ -84,9 +84,18 @@ NEJ.define([
       _e._$replaceClassName(dialogNode[_sign], 'none', '');  //改class来显示
     };
 
+    closeDialog = function (_sign){
+      _e._$replaceClassName(dialogNode[_sign], '', 'none');  
+    };
+
     return {
       init: function (){
         _obs.listen('renderDialog', render);
+        render({_sign:'sign'},'sign');
+      },
+      setWarningText: function(id, text){
+        var warning = _e._$get(id);
+        warning.innerText = text;
       }
     };
 });

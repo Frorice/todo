@@ -7,13 +7,17 @@
     margin: 0 0 1rem 0;
     list-style: none;
     font-size: .9rem;
-    &:first-child >li {
-      padding: .5rem;
-      border:.1rem solid $supColorLightGray;
-      border-radius: $borderRadiusNormal;
-      margin-bottom: 3px;
-      &:hover {
-        background-color: $supColorWhite;
+    &:first-child {
+      max-height: 325px;
+      overflow-y: auto;
+      >li {
+        padding: .5rem;
+        border:.1rem solid $supColorLightGray;
+        border-radius: $borderRadiusNormal;
+        margin-bottom: 3px;
+        &:hover {
+          background-color: $supColorWhite;
+        }
       }
     }
     &:last-child >li {

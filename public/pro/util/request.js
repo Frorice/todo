@@ -11,8 +11,9 @@ NEJ.define([
   'util/ajax/rest',
   '{pro}util/requestUrls.js',
   '{pro}util/data.js',
-  '{pro}util/observer.js'
-],function (_v,_j,_urls,_appData,_obs){
+  '{pro}util/observer.js',
+  '{pro}widget/dialog/dialog.js'
+],function (_v,_j,_urls,_appData,_obs, dialog){
     // 通用错误处理，所有请求异常均会调用此回调处理
     _v._$addEvent(
         window,'resterror',function(_error){
@@ -52,7 +53,15 @@ NEJ.define([
             getLists();
           },
           onerror:function(_error){
-            _obs.trigger('renderDialog',{_sign:'sign',sign:'sign'});
+            switch(_error.data){
+              case 404: dialog.setWarningText('sign','用户不存在！');
+                break;
+              case 401: dialog.setWarningText('sign','密码错误！');
+                break;
+              case 411: dialog.setWarningText('sign','用户名或密码不能为空！');
+                break;
+            }
+            _obs.trigger('renderDialog', {_sign:'sign'}, 'sign');
           }
         }
       _j._$request(url,opt);
@@ -77,7 +86,13 @@ NEJ.define([
             console.log(_data,"signUp");
           },
           onerror:function(_error){
-            
+            switch(_error.data){
+              case 409: dialog.setWarningText('sign','用户名已存在！');
+                break;
+              case 411: dialog.setWarningText('sign','用户名或密码不能为空！');
+                break;
+            }
+            _obs.trigger('renderDialog', {_sign:'sign'}, 'sign');
           }
         }
       _j._$request(url,opt);
@@ -197,7 +212,11 @@ NEJ.define([
             console.log(_data,"addList");
           },
           onerror:function(_error){
-              console.error("这里出错了");
+            switch(_error.data){
+              case 411: dialog.setWarningText('addList','清单名不能为空！');
+                break;
+            }
+            _obs.trigger('renderDialog', {_sign:'addList'}, 'addList');
           }
         };
 
@@ -209,7 +228,6 @@ NEJ.define([
      * @return {Void}
      */
     updateTodo = function (todo){
-
       var 
         url = _urls.todosUrl,
         opt = {
@@ -218,10 +236,6 @@ NEJ.define([
           onload:function(_data){
             _obs.trigger('updateTodo', _data.todo);
             _obs.trigger('updateList', _data.list);
-            console.log(_data,"updateTodo");
-          },
-          onerror:function(_error){
-              console.error("这里出错了");
           }
         };
 
@@ -243,7 +257,11 @@ NEJ.define([
             console.log(_data,"updateList");
           },
           onerror:function(_error){
-              console.error("这里出错了");
+            switch(_error.data){
+              case 411: dialog.setWarningText('editList','清单名不能为空！');
+                break;
+            }
+            _obs.trigger('renderDialog', {_sign:'editList', unrefresh:true}, 'editList');
           }
         };
 
@@ -290,9 +308,6 @@ NEJ.define([
           onload:function(_data){
             _obs.trigger('delList',_data.list);
             console.log(_data,"delList");
-          },
-          onerror:function(_error){
-              console.error("这里出错了");
           }
         };
 

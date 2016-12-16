@@ -30,6 +30,12 @@ html {
 body{
   background-color: $supColorDarkGray;
 }
+#app-title{
+  font-size: 3rem;
+  color: $supColorDarkGray;
+  text-align: center;
+  text-shadow: 0px 1px 10px $supColorBlack;
+}
 #todo {
   width: $widthM+$widthL;
   margin: 0 auto;

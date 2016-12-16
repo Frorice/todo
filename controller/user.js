@@ -4,7 +4,6 @@ module.exports = {
   signIn: function *(next){
     const ctx = this,
           data = ctx.request.body;
-          
     if(ctx.session.user){
       let user = yield userModel.findById(ctx.session.user);
       ctx.body = {

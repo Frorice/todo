@@ -5,7 +5,7 @@
   width: $widthFull;
   height: $heightFull;
   background-color: $supColorBlack;
-  opacity: .8;
+  opacity: .9;
 
   >#todo-dialog {
     position: relative;
@@ -14,7 +14,7 @@
     margin: 0 auto;
     background-color: white;
     border-radius: $borderRadiusNormal;
-    padding:1rem 1.5rem;
+    padding: .5rem 1.5rem 1rem 1.5rem;
 
     input {
       font-size: 1rem;
@@ -38,8 +38,22 @@
           $dividWidth($widthM, 0.25);
           border:1px solid;
           outline-style:none;
+          &:hover{
+            border-color:red;
+          }
+          &:last-child {
+            background-color: $supColorWhite;
+          }
         }
       }
     }
   }
+}
+.todo-dialog__header {
+  font-weight: bold
+}
+.todo-dialog__warning {
+  font-size: .8rem;
+  background-color: $warningColor;
+  color: $supColorWhite;
 }

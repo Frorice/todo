@@ -1,5 +1,7 @@
 <div id="todo-dialog">
   {if _sign == "sign"}
+    <div class='todo-dialog__header'>注册/登录</div>
+    <span id="${_sign}" class='todo-dialog__warning'></span>
     <input id="todo-dialog__user-name" type="text" placeholder="用户名">
     <input id="todo-dialog__pwd" type="password" placeholder="密码">
     <div>
@@ -8,12 +10,16 @@
     </div>
   {else}
     {if _sign == "addList"}
+    <div class='todo-dialog__header'>创建清单</div>
+    <span id="${_sign}" class='todo-dialog__warning'></span>
     <input id="todo-dialog__list-name--add" type="text" placeholder="清单名">
     <div>
       <input id="todo-dialog__cancel"type="button" value="取消">
       <input id="todo-dialog__add-list" type="button" value="确定">
     </div>
     {else}
+    <div class='todo-dialog__header'>修改/删除清单</div>
+    <span id="editList" class='todo-dialog__warning'></span>
     <input id="todo-dialog__list-name--update" type="text" placeholder="清单名">
     <div id="${_sign}">
       <input id="todo-dialog__delete-list" type="button" value="删除">
