@@ -18,6 +18,15 @@
         &:hover {
           background-color: $supColorWhite;
         }
+        .icon-trash{
+          font-size: 1rem;
+          float: right;
+          color: $supColorGray;
+          &:hover{
+            cursor:pointer;
+            color: $supColorBlack;
+          }
+        }
       }
     }
     &:last-child >li {

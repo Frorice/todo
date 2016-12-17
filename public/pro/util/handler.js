@@ -45,10 +45,8 @@ NEJ.define([
     addItem = function(_event){
       if(_event.srcElement.id == "todo-dialog__add-list"){
         _req.addList(_e._$get('todo-dialog__list-name--add').value);
-      }else{
-        if(_event.key == "Enter"){
-          _req.addTodo(_e._$get('main-panel__add-todo').value);        
-        }
+      }else if(_event.key == "Enter"&&_appData.getCurrList()){
+        _req.addTodo(_e._$get('main-panel__add-todo').value);
       }
     };
     /**
@@ -117,7 +115,7 @@ NEJ.define([
      * @return {Void}
      */
     sign = function(_event){
-      var userInfo;
+      var userInfo,title = _e._$get('title');
       if(_e._$get('todo-dialog__user-name')){
         userInfo = {
           userName: _e._$get('todo-dialog__user-name').value,
@@ -129,6 +127,7 @@ NEJ.define([
       }else if(_event.srcElement.id == 'todo-dialog__sign-up'){
         _req.signUp(userInfo);
       }else {
+        title.innerText = 'todos';
         _req.signOut();
       }
     };
@@ -139,7 +138,9 @@ NEJ.define([
      * @return {Void}
      */
     deleteList = function (_event){
-      var lid = _event.srcElement.parentNode.id;
+      var lid = _event.srcElement.parentNode.id,
+          title = _e._$get('title');
+      title.innerText = "todos";
       _req.delList(lid);
     };
     /**

@@ -7,7 +7,7 @@
     color: $supColorWhite;
   }
   >span {
-    margin-left: 1rem;
+    margin-left: .25rem;
   }
 }
 #mainpanel-add{
@@ -16,7 +16,8 @@
   >div{
     >i{
       position: absolute;
-      left: .5rem;
+      left: 1.75rem;
+      top: 1.35rem;
       color: $mainColor1;
     }
     >input {

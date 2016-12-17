@@ -9,7 +9,6 @@
     >li {
       padding: .5rem;
       &:hover{
-        cursor: pointer;
         background-color: $supColorLightBlue;
       }
       >div {
@@ -18,6 +17,16 @@
           color: $warningColor;
         }
       }
+    }
+  }
+  .icon-list-ul{
+    color: $supColorGray;
+  }
+  .icon-edit{
+    color: $supColorGray;
+    &:hover {
+      cursor:pointer;
+      color: $supColorBlack;
     }
   }
 }

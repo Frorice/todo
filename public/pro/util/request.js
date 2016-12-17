@@ -111,6 +111,7 @@ NEJ.define([
             _obs.trigger('renderTodoLists',{
               none:true
             });
+            _obs.trigger('getTodos',{none:true});
             console.log(_data,"signOut");
           }
         }
@@ -187,7 +188,9 @@ NEJ.define([
             console.log(_data,"addTodo");
           },
           onerror:function(_error){
-              console.error("这里出错了");
+              switch(_error.data){
+                case 401: alert('请登录！');
+              }
           }
         };
 
@@ -306,8 +309,8 @@ NEJ.define([
           },
           method:'DELETE',
           onload:function(_data){
-            _obs.trigger('delList',_data.list);
-            console.log(_data,"delList");
+            _obs.trigger('delList', _data.list);
+            _obs.trigger('getTodos', {none:true});
           }
         };
 

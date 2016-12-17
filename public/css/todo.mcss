@@ -65,6 +65,9 @@ body{
 #user-bar{
   padding: .5rem;
   background-color: $supColorLightGray;
+  .icon-user {
+    color:$mainColor1;
+  }
 }
 #sidepanel-add{
   width: $widthM;
@@ -75,7 +78,7 @@ body{
     color: $supColorWhite;
   }
   >span {
-    margin-left: 1rem;
+    margin-left: .25rem;
   }
 }
 #mainpanel-add{
@@ -84,7 +87,8 @@ body{
   >div{
     >i{
       position: absolute;
-      left: .5rem;
+      left: 1.75rem;
+      top: 1.35rem;
       color: $mainColor1;
     }
     >input {
@@ -111,7 +115,6 @@ body{
     >li {
       padding: .5rem;
       &:hover{
-        cursor: pointer;
         background-color: $supColorLightBlue;
       }
       >div {
@@ -120,6 +123,16 @@ body{
           color: $warningColor;
         }
       }
+    }
+  }
+  .icon-list-ul{
+    color: $supColorGray;
+  }
+  .icon-edit{
+    color: $supColorGray;
+    &:hover {
+      cursor:pointer;
+      color: $supColorBlack;
     }
   }
 }
@@ -142,6 +155,15 @@ body{
         margin-bottom: 3px;
         &:hover {
           background-color: $supColorWhite;
+        }
+        .icon-trash{
+          font-size: 1rem;
+          float: right;
+          color: $supColorGray;
+          &:hover{
+            cursor:pointer;
+            color: $supColorBlack;
+          }
         }
       }
     }

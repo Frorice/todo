@@ -5,7 +5,7 @@
         <li id="todos__${todo._id}">
           <input type="checkbox" {if !todo.active} checked {/if}/>
           <span class="todos__active--${todo.active}">${todo.cnt}</span>
-          <i id="delTodo">删除</i>
+          <i class="icon-trash" id="delTodo"></i>
         </li>
       {/for}
     </ul>

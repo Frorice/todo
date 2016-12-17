@@ -3,11 +3,12 @@
     <ul id="todos-lists__${uid}">
       {for list in lists}
       <li id="todo-lists__${list._id}">
+        <i class="icon-list-ul"></i>
         <span>${list.name}</span>
         <div>
           <span class="active">${list.active}</span>/${list.total}
           <!--编辑清单图标按钮占位-->
-          <i id="todo-lists__edit">编辑</i>
+          <i class="icon-edit" id="todo-lists__edit"></i>
         </div>
       </li>
       {/for}
