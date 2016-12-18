@@ -28,7 +28,7 @@ module.exports = {
       ctx.body = 'not found';
       return;
     }
-
+    data.cnt = data.cnt.substr(0,24).replace(/</g,'&lt');//简单防xss+超过24个字符长的todo内容会被截断
     if(data._id){
       //更新todo
       todo = yield todoModel.findById(data._id);
@@ -38,7 +38,7 @@ module.exports = {
         return;
       }else{
         rawActive = todo.active;
-        for(let i in data){
+        for(var i in data){
           //不允许修改todo的归属
           if(i!='uid'&&i!='lid'){
             todo[i] && (todo[i] = data[i]);
@@ -83,7 +83,7 @@ module.exports = {
     data      = ctx.query,
     _uid      = ctx.session.user;
 
-    var todo;
+    var todo, list;
 
     if(!data||!data.tid){
       ctx.status = 411;
@@ -96,11 +96,11 @@ module.exports = {
       this.status = 404;
       this.body   = 'not found';
     }else{
-      let result = yield todoModel.removeById(data.tid);
+      var result = yield todoModel.removeById(data.tid);
       result = result.result;
       if(result.ok){
         //删除后所在list的total减一，active也要相应变化
-        let list = yield listModel.findById(todo.lid);
+        list = yield listModel.findById(todo.lid);
         todo.active&&list.active--;
         list.total--;
         list.save(function (err){
@@ -124,6 +124,8 @@ module.exports = {
     const ctx = this,
     data      = ctx.query,
     _uid      = ctx.session.user;
+    
+    var todos,list;
 
     if(!data||!data.uid && !data.lid){
       ctx.status = 411;
@@ -137,15 +139,19 @@ module.exports = {
       return;
     }
 
-    var todos = yield todoModel.findByLid(data.lid);
+    todos = yield todoModel.findByLid(data.lid);
     if(!todos||!todos.length){
       ctx.status = 404;
       ctx.body   = 'not found';
     }else{
+      list = yield listModel.findById(data.lid);
       ctx.body = {
-        uid:data.uid,
-        lid:data.lid,
-        todos:todos
+        list: list,
+        todos: {
+          uid:data.uid,
+          lid:data.lid,
+          todos:todos
+        }
       };
     }
   }

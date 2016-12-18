@@ -17,7 +17,7 @@ NEJ.define([
   ],function (_obs, _hdl, _e, _v, _p, _tpl){
     var build, render, openDialog;
 
-    var dialogHtml, dialogNode = {};//用户信息条html结构
+    var dialogHtml, dialogNode = {};
 
     /**
      * 构建模板
@@ -41,26 +41,44 @@ NEJ.define([
       build(_data);
       if(!dialogNode[_sign]){
         dialogNode[_sign] = _e._$create('div','none diaCta');
-        _v._$addEvent(dialogNode[_sign], 'click', function (_event){
-          if(_event.srcElement.id == 'todo-dialog__sign-up' ||
-            _event.srcElement.id == 'todo-dialog__sign-in' ){
-            _hdl.sign(_event);
-            closeDialog(_sign);
+        _v._$addEvent(dialogNode[_sign], 'click', function(_event){
+          switch(_event.target.id){
+            case 'todo-dialog__sign-up':
+            case 'todo-dialog__sign-in':
+              _hdl.sign(_event);
+              closeDialog(_sign);
+              break;
+            case 'todo-dialog__add-list':
+              _hdl.addItem(_event);
+              closeDialog(_sign);
+              break;
+            case 'todo-dialog__delete-list':
+              _hdl.deleteList(_event);
+              closeDialog(_sign);
+              break;
+            case 'todo-dialog__update-list':
+              _hdl.updateList(_event);
+              closeDialog(_sign);
+              break;
+            case 'todo-dialog__cancel':
+              closeDialog(_sign); 
+              break;
           }
-          if(_event.srcElement.id == "todo-dialog__add-list"){
-            _hdl.addItem(_event);
-            closeDialog(_sign);
-          }
-          if(_event.srcElement.id == "todo-dialog__delete-list"){
-            _hdl.deleteList(_event);
-            closeDialog(_sign);
-          }
-          if(_event.srcElement.id == "todo-dialog__update-list"){
-            _hdl.updateList(_event);
-            closeDialog(_sign);
-          }
-          if(_event.srcElement.id == "todo-dialog__cancel"){
-            closeDialog(_sign); 
+        });
+        _v._$addEvent(dialogNode[_sign], 'enter', function(_event){
+          switch(_sign){
+            case 'sign': 
+              _hdl.sign(_event);
+              closeDialog(_sign);
+              break;
+            case 'addList':
+              _hdl.addItem(_event);
+              closeDialog(_sign);
+              break;
+            case 'editList':
+              _hdl.updateList(_event);
+              closeDialog(_sign);
+              break;
           }
         });
         dialogNode[_sign].innerHTML = dialogHtml;
@@ -72,7 +90,6 @@ NEJ.define([
       }
       
       openDialog(_sign);
-      
     };
 
     /**
@@ -87,11 +104,10 @@ NEJ.define([
     closeDialog = function (_sign){
       _e._$replaceClassName(dialogNode[_sign], '', 'none');  
     };
-
+    
     return {
       init: function (){
         _obs.listen('renderDialog', render);
-        render({_sign:'sign'},'sign');
       },
       setWarningText: function(id, text){
         var warning = _e._$get(id);

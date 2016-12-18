@@ -57,6 +57,14 @@ NEJ.define([
      * @return {Void}
      */
     _updateLists = function (_data){
+
+      if(_data.none){
+        _obs.trigger('renderTodoLists',{none:true});
+        currUser.data.lists = null;
+        currList = null;
+        return;
+      }
+
       if(_data.uid != currUser.id){
         return;
       }
@@ -126,7 +134,7 @@ NEJ.define([
       }
     };
     /**
-     * 根据不同条件返回相应todo集合
+     * 根据不同条件返回相应todo集合（全部/未完成/已完成）
      * @param  {Boolean}  checkStatus 查询条件
      * @return {Array}    renderTodos 用于渲染todo列表的todo集合
      */

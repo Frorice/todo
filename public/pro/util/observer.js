@@ -32,7 +32,7 @@ NEJ.define([],function (){
   trigger = function (){
     var key = Array.prototype.shift.call(arguments),
         cbs = clientList[key];
-
+    
     if(!cbs || cbs.length === 0){
       return false;
     }

@@ -50,7 +50,7 @@ NEJ.define([
           method:'POST',
           onload:function(_data){
             _obs.trigger('signIn',_data);
-            getLists();
+            getLists();//登录后取得该用户的清单数据
           },
           onerror:function(_error){
             switch(_error.data){
@@ -83,7 +83,6 @@ NEJ.define([
           method:'POST',
           onload:function(_data){
             _obs.trigger('signUp',_data);
-            console.log(_data,"signUp");
           },
           onerror:function(_error){
             switch(_error.data){
@@ -108,11 +107,8 @@ NEJ.define([
           method:'POST',
           onload:function(_data){
             _obs.trigger('signOut',_data);
-            _obs.trigger('renderTodoLists',{
-              none:true
-            });
+            _obs.trigger('getLists',{none:true});
             _obs.trigger('getTodos',{none:true});
-            console.log(_data,"signOut");
           }
         }
       _j._$request(url,opt);
@@ -125,19 +121,22 @@ NEJ.define([
       var 
         url = _urls.todosUrl,
         opt = {
+          headers:{
+            "if-modified-since":"0"
+          },
           param:{
             uid:_appData.getCurrUser().id,
             lid:_lid
           },
           method:'GET',
           onload:function(_data){
-            _obs.trigger('getTodos',_data);
-            console.log(_data,"getTodos");
+            _obs.trigger('getTodos', _data.todos);
+            _obs.trigger('updateList', _data.list);
           },
           onerror:function(_error){
-              if(_error.data == 404){
-                _obs.trigger('getTodos',{none:true});
-              }
+            if(_error.data == 404){
+              _obs.trigger('getTodos',{none:true});
+            }
           }
         };
 
@@ -152,6 +151,9 @@ NEJ.define([
       var 
         url = _urls.listsUrl,
         opt = {
+          headers:{
+            "if-modified-since":"0"
+          },
           param:{
             uid:_appData.getCurrUser().id
           },
@@ -173,6 +175,9 @@ NEJ.define([
      * @return {Void}
      */
     addTodo = function (cnt){
+      if(cnt.length>24){
+        alert('todo内容长度不能超过24个字符，否则将被截断！');
+      }
       var 
         url = _urls.todosUrl,
         opt = {
@@ -202,6 +207,9 @@ NEJ.define([
      * @return {Void}
      */
     addList = function (name){
+      if(name.length>10){
+        alert('清单名长度不能超过10个字符，否则将被截断！');
+      }
       var 
         url = _urls.listsUrl,
         opt = {

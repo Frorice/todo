@@ -7,6 +7,7 @@
  */
 /** @module pro/todo.js */
 NEJ.define([
+  '{pro}util/request.js',
   '{pro}util/data.js',
   '{pro}widget/sidePanel/sidePanel.js',
   '{pro}widget/mainPanel/mainPanel.js',
@@ -15,7 +16,7 @@ NEJ.define([
   '{pro}widget/todos/todos.js',
   '{pro}widget/userBar/userBar.js',
   '{pro}widget/dialog/dialog.js'
-],function (_appData, sidePanel, mainPanel, submitForm, todoLists, todos, userBar, dialog){
+],function (_req, _appData, sidePanel, mainPanel, submitForm, todoLists, todos, userBar, dialog){
     var init;
 
     /**
@@ -35,6 +36,8 @@ NEJ.define([
      mainPanel.init(_container);
      //初始化本地默认数据
      _appData.init();
+     //尝试自动登录(已登录过或多开)
+     _req.signIn({init: true});
     }
 
   return {

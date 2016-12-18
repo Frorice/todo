@@ -43,9 +43,12 @@ NEJ.define([
      */
 
     addItem = function(_event){
-      if(_event.srcElement.id == "todo-dialog__add-list"){
+      if((_event.key == "Enter"&&_event.target.id == 'todo-dialog__list-name--add')
+        || _event.target.id  == "todo-dialog__add-list"){
         _req.addList(_e._$get('todo-dialog__list-name--add').value);
-      }else if(_event.key == "Enter"&&_appData.getCurrList()){
+      }else if(_event.key == "Enter"
+        && _event.target.id == 'main-panel__add-todo'
+        && _appData.getCurrList()){
         _req.addTodo(_e._$get('main-panel__add-todo').value);
       }
     };
@@ -55,8 +58,8 @@ NEJ.define([
      * @return {Void}
      */
     updateTodo = function (_event){
-      var srcElement = _event.srcElement;
-          tid = srcElement.parentNode.id.replace('todos__',''),
+      var target = _event.target;
+          tid = target.parentNode.id.replace('todos__',''),
           todos = _appData.getCurrUser().data.todos;
       for(var i=0;todos[i];i++){
         if(todos[i]._id == tid){
@@ -73,9 +76,9 @@ NEJ.define([
      */
     checkTodosByStatus = function (_event){
       var 
-        srcElement  = _event.srcElement,
+        target  = _event.target,
         user        = _appData.getCurrUser(),
-        checkStatus = srcElement.innerHTML.toLowerCase();
+        checkStatus = target.innerHTML.toLowerCase();
       var renderData = {
         uid: user.id
       };
@@ -90,23 +93,29 @@ NEJ.define([
      */
     switchList = function (_event){
       var lid,
+      target = _event.target,
       lists = _appData.getCurrUser().data.lists,
       title = _e._$get('title');
-      for(var i = 0; _event.path[i];i++){
-        if(_event.path[i].tagName == 'LI'){
-          lid = _event.path[i].id.replace('todo-lists__','');
-          for(var j = 0;lists[j];j++){
-            if(lists[j]._id == lid){
-              _appData.setCurrList(lists[j]);
-              title.innerText = lists[j].name;
-              break;
-            }
-          }
-          _req.getTodos(lid);
-          break;
-        }
+
+      if(target.tagName == 'LI'){
+        lid = target.id.replace('todo-lists__','');
+      }else if(target.parentNode.tagName == 'LI'){
+        lid = target.parentNode.id.replace('todo-lists__','');
+      }else if(target.className == 'active'){
+        lid = target.parentNode.parentNode.id.replace('todo-lists__','');
       }
-      _appData.setCheckStatus('active');
+      
+      if(lid){
+        for(var j = 0;lists[j];j++){
+          if(lists[j]._id == lid){
+            _appData.setCurrList(lists[j]);
+            title.innerText = lists[j].name;
+            break;
+          }
+        }
+        _req.getTodos(lid);
+        _appData.setCheckStatus('active');
+      }
     };
 
      /**
@@ -122,9 +131,9 @@ NEJ.define([
           pwd: _e._$get('todo-dialog__pwd').value 
         };
       }
-      if(_event.srcElement.id == 'todo-dialog__sign-in'){
+      if(_event.key == 'Enter' || _event.target.id == 'todo-dialog__sign-in'){
         _req.signIn(userInfo);
-      }else if(_event.srcElement.id == 'todo-dialog__sign-up'){
+      }else if(_event.target.id == 'todo-dialog__sign-up'){
         _req.signUp(userInfo);
       }else {
         title.innerText = 'todos';
@@ -138,7 +147,7 @@ NEJ.define([
      * @return {Void}
      */
     deleteList = function (_event){
-      var lid = _event.srcElement.parentNode.id,
+      var lid = _e._$get('todo-dialog__lid').innerText,
           title = _e._$get('title');
       title.innerText = "todos";
       _req.delList(lid);
@@ -149,8 +158,8 @@ NEJ.define([
      * @return {Void}
      */
     deleteTodo = function (_event){
-      var srcElement = _event.srcElement;
-      var tid = srcElement.parentNode.id.replace('todos__','');
+      var target = _event.target;
+      var tid = target.parentNode.id.replace('todos__','');
       _req.delTodo(tid);
     };
     /**
@@ -160,9 +169,8 @@ NEJ.define([
      */
     updateList = function (_event){
       var lists = _appData.getCurrUser().data.lists,
-      lid       = _event.srcElement.parentNode.id,
+      lid       = _e._$get('todo-dialog__lid').innerText,
       listName  = _e._$get('todo-dialog__list-name--update').value;
-
       for(var i = 0; lists[i]; i++){
         if(lists[i]._id == lid){
           lists[i].name = listName;

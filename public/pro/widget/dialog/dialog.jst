@@ -20,11 +20,12 @@
     {else}
     <div class='todo-dialog__header'>修改/删除清单</div>
     <span id="editList" class='todo-dialog__warning'></span>
-    <input id="todo-dialog__list-name--update" type="text" placeholder="清单名">
-    <div id="${_sign}">
+    <input id="todo-dialog__list-name--update" type="text" placeholder="清单名" value = "${_value}" >
+    <div>
       <input id="todo-dialog__delete-list" type="button" value="删除">
       <input id="todo-dialog__update-list" type="button" value="修改">
     </div>
+    <span id="todo-dialog__lid" style="display:none">${_sign}</span>
     {/if}
   {/if}
 </div>

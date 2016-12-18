@@ -60,14 +60,14 @@ NEJ.define([
         todos:{
           eventType:'click',
           handler:function(_event){
-            var srcElement = _event.srcElement;
-            if(srcElement.tagName == 'INPUT'){
+            var target = _event.target;
+            if(target.tagName == 'INPUT'){
               _hdl.updateTodo(_event);
             }
-            if(srcElement.tagName == 'LI' && srcElement.parentNode.id == "todos__switch-status"){
+            if(target.tagName == 'LI' && target.parentNode.id == "todos__switch-status"){
               _hdl.checkTodosByStatus(_event);
             }
-            if(srcElement.id == 'delTodo'){
+            if(target.id == 'delTodo'){
               _hdl.deleteTodo(_event);
             }
           }

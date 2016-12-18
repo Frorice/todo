@@ -136,6 +136,7 @@ NEJ.define([
                     _request.data = _u._$object2string(_request.data,'&',!0);
                 }
             }
+
             this.__xhr.send(_request.data);
         };
     })();
@@ -156,6 +157,7 @@ NEJ.define([
             // state change
             case 2 :
                 if (this.__xhr.readyState==4){
+                    
                     this.__onLoadRequest({
                         status:this.__xhr.status,
                         result:this.__xhr.responseText||''

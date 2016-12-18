@@ -20,7 +20,7 @@ module.exports = {
       ctx.body   = 'unauthorized';
       return;
     }
-
+    data.name = data.name.substr(0,10).replace(/</g,'&lt');//简单防xss+超过10个字符长的清单名会被截断
     if(data._id){
       //更新list
       list = yield listModel.findById(data._id);
@@ -30,7 +30,7 @@ module.exports = {
         return;
       }else{
         
-        for(let i in data){
+        for(var i in data){
           if(i!='uid'){
             list[i] && (list[i] = data[i]);
           }
@@ -67,7 +67,7 @@ module.exports = {
       this.status = 403;
       this.body   = 'forbidden';
     }else{
-      let result = yield listModel.removeById(data.lid);
+      var result = yield listModel.removeById(data.lid);
       result = result.result;
       if(result.ok){
         //删除该list下所有todo
