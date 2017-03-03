@@ -1,0 +1,6 @@
+[{
+  "name" : "todo",
+  "script": "./app.js",
+  "instance": "max",
+  "exec_mode": "cluster"
+}]
