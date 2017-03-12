@@ -6,6 +6,7 @@
           <input type="checkbox" {if !todo.active} checked {/if}/>
           <span class="todos__active--${todo.active}">${todo.cnt}</span>
           <i class="icon-trash" id="delTodo"></i>
+          <i class="icon-edit" id="changeTodo"></i>
         </li>
       {/for}
     </ul>
