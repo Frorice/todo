@@ -18,7 +18,8 @@
         &:hover {
           background-color: $supColorWhite;
         }
-        .icon-trash{
+        .icon-trash, .icon-edit{
+          margin-right: .5rem;
           font-size: 1rem;
           float: right;
           color: $supColorGray;

@@ -58,18 +58,29 @@ NEJ.define([
     bindEvent = function(_node, _widgetType){
       var typeMap = {
         todos:{
-          eventType:'click',
+          eventType:'click keyup',
           handler:function(_event){
             var target = _event.target;
-            if(target.tagName == 'INPUT'){
-              _hdl.updateTodo(_event);
+            if(_event.type == 'keyup'&&_event.key == 'Enter'){
+              _hdl.updateTodo(_event,target.value);
+            }else{
+              if(target.id == 'changeTodo'){
+                var span = target.parentNode.getElementsByTagName('span')[0],
+                    text = span.innerText;
+                    span.outerHTML = '<input type="text" value='+text+'>';
+              }
+              if(target.tagName == 'INPUT' && target.type == 'checkbox'){
+                _hdl.updateTodo(_event);
+              }
+              if(target.tagName == 'LI' && target.parentNode.id == "todos__switch-status"){
+                _hdl.checkTodosByStatus(_event);
+              }
+              if(target.id == 'delTodo'){
+                _hdl.deleteTodo(_event);
+              }
             }
-            if(target.tagName == 'LI' && target.parentNode.id == "todos__switch-status"){
-              _hdl.checkTodosByStatus(_event);
-            }
-            if(target.id == 'delTodo'){
-              _hdl.deleteTodo(_event);
-            }
+            
+
           }
         },
         submitForm:{

@@ -58,12 +58,14 @@ NEJ.define([
      * @return {Void}
      */
     updateTodo = function (_event){
-      var target = _event.target;
+      var target = _event.target,
+          eventType = _event.type,
           tid = target.parentNode.id.replace('todos__',''),
           todos = _appData.getCurrUser().data.todos;
       for(var i=0;todos[i];i++){
         if(todos[i]._id == tid){
-          todos[i].active = !todos[i].active;
+          (eventType == 'keyup')? (todos[i].cnt = arguments[1]):
+          (todos[i].active = !todos[i].active);
           _req.updateTodo(todos[i]);
           break;
         }
