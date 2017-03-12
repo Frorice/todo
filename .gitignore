@@ -6,3 +6,4 @@
 /node_modules
 #file
 /public/pro/widget/mix.js
+gulpfile.js

@@ -1,13 +1,1 @@
-var f = function(){
-	var _  = NEJ.P,
-	    _v = _('nej.v'),
-		_j = _('nej.j');
-	_v._$addEvent(window,'message',function(_event){
-		nej.j._$postMessage(_event.source,{
-                    data:'你好！',
-                    origin:_event.origin
-                });
-	});
-}
-NEJ.define('{pro}message.test.js',
-    ['{lib}util/ajax/message.js'],f);
+var f=function(){var e=NEJ.P,s=e("nej.v");e("nej.j");s._$addEvent(window,"message",function(e){nej.j._$postMessage(e.source,{data:"你好！",origin:e.origin})})};NEJ.define("{pro}message.test.js",["{lib}util/ajax/message.js"],f);

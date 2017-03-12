@@ -28,7 +28,7 @@ mongoose.connect('mongodb://127.0.0.1/todos');
 //请求体解析
 app.use(bodyParser());
 //静态资源根目录
-app.use(koaStatic(__dirname + '/public'));
+app.use(koaStatic(__dirname + '/public',{ gzip: true}));
 //session
 app.use(session(CONFIG, app));
 

@@ -1,9 +1,1 @@
-NEJ.define(['util/highlight/touch'],function(_t){
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _v = _('nej.v');
-    test('highlight',function(){
-        expect(0);
-        _t._$highlight('abc','red');
-    });
-});
+NEJ.define(["util/highlight/touch"],function(h){var i=NEJ.P;i("nej.e"),i("nej.v");test("highlight",function(){expect(0),h._$highlight("abc","red")})});
